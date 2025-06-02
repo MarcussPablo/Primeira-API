@@ -1,11 +1,11 @@
 from fastapi import FastAPI
-from app.database import engine, Base
-from app.routes import auth_routes, post_routes, admin_routes
+from app.database import engine
+from app import models
 
-Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)  # Cria tabelas no PostgreSQL
 
 app = FastAPI()
 
-app.include_router(auth_routes.router)
-app.include_router(post_routes.router)
-app.include_router(admin_routes.router)
+@app.get("/")
+def read_root():
+    return {"message": "API no ar!"}
